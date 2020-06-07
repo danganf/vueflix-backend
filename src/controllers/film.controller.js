@@ -10,8 +10,8 @@ exports.getHome = async (req, res, next) => {
         let dataTrendiMovie = await repository.getTrendingByType( 'movie' );
         let dataTrendiTv    = await repository.getTrendingByType( 'tv' );
 
-        //dataResult.push( { label: 'Popularidade'    , data: dataPopular } );
-        //dataResult.push( { label: 'Trending Topic Filmes', data: dataTrendiMovie } );
+        dataResult.push( { label: 'Popularidade'         , data: dataPopular } );
+        dataResult.push( { label: 'Trending Topic Filmes', data: dataTrendiMovie } );
         dataResult.push( { label: 'Trending Topic TV'    , data: dataTrendiTv } );
 
         res.status(200).send( dataResult );
