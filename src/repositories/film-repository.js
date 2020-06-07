@@ -1,25 +1,39 @@
 "use restrict";
 
-const { CON_API_BASE_URL, CON_URL_IMG_URL } = require('../configs/config-default');
+const axiosSrv  = require('../services/axios');
 const modelFilm = require('../models/film');
-const axios = require('axios');
+const { CON_URL_IMG_URL } = require('../configs/config-default');
 
-exports.get = async () => {
+exports.getPopularity = async () => {
 
-    let fields = '&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2020';
+    let params  = 'discover/movie?language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=2020';
     
-    let data = [];
-    await axios.get(CON_API_BASE_URL + fields)
-    .then(function (response) {
-        response.data.results.forEach( ( item ) => {
-            modelFilm.setdata( item )
-            data.push( modelFilm.toObjData() );
+    let data   = [];
+    let result = await axiosSrv.request( params );
+    let model  = new modelFilm();
+    result.forEach( ( item ) => {        
+        item.poster_path = CON_URL_IMG_URL + item.poster_path;
+        model.setdata( item )
+        data.push( model.toObjData() );
+    } );
 
-        } );
-    })
-    .catch(function (error) {
-        
-    });
+    return data;
+};
+
+exports.getTrendingByType = async (media, time) => {
+
+    media = media || 'movie';
+    time  = time  || 'week';
+    let model  = new modelFilm();
+    let params = `trending/${media}/${time}?language=pt-BR&page=1&year=2020`;
+    
+    let data   = [];
+    let result = await axiosSrv.request( params );
+    result.forEach( ( item ) => {        
+        item.poster_path = CON_URL_IMG_URL + item.poster_path;
+        model.setdata( item )
+        data.push( model.toObjData() );
+    } );
 
     return data;
 };

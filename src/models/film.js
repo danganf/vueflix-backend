@@ -5,7 +5,7 @@ const attrs = {
     id: null,
     title: null,
     overview: null,
-    poster: null,
+    poster_path: null,
     vote_count: null,
     popularity: null,
     vote_average: null,
@@ -18,4 +18,4 @@ class customerModel extends modelContract{
     }
 }
 
-module.exports = new customerModel();
+module.exports = customerModel;
