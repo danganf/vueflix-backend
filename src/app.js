@@ -17,9 +17,9 @@ app.use(function(req, res, next) {
 
 //CARREGAR ROTAS
 const routeIndex = require('./routes/index');
-const routeFilms = require('./routes/films');
+const routeMedia = require('./routes/films');
 
-app.use( '/'      , routeIndex );
-app.use( '/films' , routeFilms );
+app.use( '/'     , routeIndex );
+app.use( '/media', routeMedia );
 
 module.exports = app;

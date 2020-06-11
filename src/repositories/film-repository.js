@@ -1,19 +1,25 @@
 "use restrict";
 
-const axiosSrv  = require('../services/axios');
-const modelFilm = require('../models/film');
-const modelFilmDetail = require('../models/film-detail');
+const axiosSrv         = require('../services/axios');
+const modelFilm        = require('../models/film');
+const modelMovieDetail = require('../models/movie-detail');
+const modelTvDetail    = require('../models/tv-detail');
 const { CON_URL_IMG_URL } = require('../configs/config-default');
 
-exports.getDetail = async (id) => {
+exports.getDetail = async (media, id) => {
 
-    let data   = {};
-    let params = `movie/${id}`;
+    media      = media.toLowerCase();
+    let data   = {};    
+    let params = `${media}/${parseInt(id)}`;
     let result = await axiosSrv.request( params, '?' );
-    if( result ){
-        let model            = new modelFilmDetail();   
+    if( result ){        
         result.poster_path   = CON_URL_IMG_URL + result.poster_path;
         result.backdrop_path = CON_URL_IMG_URL + result.backdrop_path;
+        let model            = null;
+        switch( media ){
+            case 'movie': model = new modelMovieDetail();break;
+            case 'tv'   : model = new modelTvDetail();break;
+        }
         model.setdata( result )
         data = model.toObjData();        
     }
@@ -48,6 +54,10 @@ exports.getTrendingByType = async (media, time) => {
     result.forEach( ( item, idx ) => {     
         if( idx >= 10 ) return;
         item.poster_path = CON_URL_IMG_URL + item.poster_path;
+        if( item.name ){
+            item.title = item.name;
+            delete item.name;
+        }
         model.setdata( item )
         data.push( model.toObjData() );
     } );

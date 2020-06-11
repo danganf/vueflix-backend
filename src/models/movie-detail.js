@@ -10,10 +10,13 @@ const attrs = {
     poster_path: null,
     backdrop_path: null,
     genres: null,
-    production_countries: [],
+    production_companies: [],
     production_countries: [],
     imdb_id: null,
     homepage: null,
+    popularity: null,
+    vote_average: null,
+    vote_count: null,
 };
 
 class customerModel extends modelContract{
