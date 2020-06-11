@@ -2,6 +2,15 @@
 
 const repository = require('../repositories/film-repository');
 
+exports.getDetail = async (req, res, next) => {
+    try{
+        let dataResult = await repository.getDetail( req.params.id );
+        res.status(200).send( dataResult );
+    } catch(e){
+        res.status(500).send({ message: "Nenhum registro localizado", data: e });
+    }
+};
+
 exports.getHome = async (req, res, next) => {
 
     try {

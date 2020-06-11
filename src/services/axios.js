@@ -1,4 +1,4 @@
-const { CON_API_BASE_URL, CON_API_KEY_AUTH_v3 } = require('../configs/config-default');
+const { CON_API_BASE_URL, CON_API_KEY_AUTH_v3, CON_LANG } = require('../configs/config-default');
 const axios = require('axios');
 
 class axiosService{
@@ -6,12 +6,20 @@ class axiosService{
         
     }
 
-    async request( params ){
-        let data = [];
-        //console.log(CON_API_BASE_URL + params + '&api_key=' + CON_API_KEY_AUTH_v3);
-        await axios.get( CON_API_BASE_URL + params + '&api_key=' + CON_API_KEY_AUTH_v3 )
-        .then(function (response) {                
-            data = response.data.results;
+    async request( params, paramGet ){
+        let data = null;
+
+        paramGet = paramGet || '&';
+
+        const url = CON_API_BASE_URL + params + paramGet + 'language=' + CON_LANG + '&api_key=' + CON_API_KEY_AUTH_v3;
+        console.log(url);
+        await axios.get( url )
+        .then(function (response) {     
+            if( typeof response.data.results !== 'undefined'){
+                data = response.data.results;
+            } else {
+                data = response.data;
+            }
         })
         .catch(function (error) {
             
