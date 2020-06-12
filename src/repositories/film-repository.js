@@ -52,7 +52,7 @@ exports.getTrendingByType = async (media, time) => {
     let data   = [];
     let result = await axiosSrv.request( params );
     result.forEach( ( item, idx ) => {     
-        if( idx >= 10 ) return;
+        if( idx >= 12 ) return;
         item.poster_path = CON_URL_IMG_URL + item.poster_path;
         if( item.name ){
             item.title = item.name;
