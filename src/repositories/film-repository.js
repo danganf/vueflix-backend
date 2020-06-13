@@ -30,7 +30,6 @@ exports.getDetail = async (media, id) => {
  */
 exports.getList = async ( objSetup ) => {
 
-    console.log(objSetup);
     const media = objSetup.media;
     const page  = parseInt(objSetup.page);
 
