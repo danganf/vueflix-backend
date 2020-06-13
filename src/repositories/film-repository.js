@@ -33,7 +33,8 @@ exports.getList = async ( objSetup ) => {
     const media = objSetup.media;
     const page  = parseInt(objSetup.page);
 
-    let params  = `discover/${media}?&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&year=2020`;
+    let params  = `discover/${media}?&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&year=${objSetup.year}`;
+        params += `&with_genres=${objSetup.genre}`;
     
     let data   = [];
     let result = await axiosSrv.request( params );
