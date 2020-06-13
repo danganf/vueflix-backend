@@ -1,11 +1,27 @@
 "use restrict";
 
 const repository = require('../repositories/film-repository');
+const { search } = require('../routes/films');
 
 exports.getDetail = async (req, res, next) => {
     try{
         const media    = req.params.media;
         let dataResult = await repository.getDetail( media, req.params.id );
+        res.status(200).send( dataResult );
+    } catch(e){
+        res.status(500).send({ message: "Nenhum registro localizado", data: e });
+    }
+};
+
+exports.getList = async (req, res, next) => {
+    try{
+        
+        const search = { 
+            media: req.params.media, 
+            page : req.params.page 
+        };
+
+        let dataResult = await repository.getList(search);
         res.status(200).send( dataResult );
     } catch(e){
         res.status(500).send({ message: "Nenhum registro localizado", data: e });

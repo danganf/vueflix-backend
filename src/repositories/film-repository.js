@@ -4,7 +4,7 @@ const axiosSrv         = require('../services/axios');
 const modelFilm        = require('../models/film');
 const modelMovieDetail = require('../models/movie-detail');
 const modelTvDetail    = require('../models/tv-detail');
-const { CON_URL_IMG_URL } = require('../configs/config-default');
+const { CON_URL_IMG_URL, CON_URL_IMG_URL_MIN } = require('../configs/config-default');
 
 exports.getDetail = async (media, id) => {
 
@@ -23,6 +23,32 @@ exports.getDetail = async (media, id) => {
         model.setdata( result )
         data = model.toObjData();        
     }
+    return data;
+};
+/**
+ * @param {media, page} objSetup 
+ */
+exports.getList = async ( objSetup ) => {
+
+    console.log(objSetup);
+    const media = objSetup.media;
+    const page  = parseInt(objSetup.page);
+
+    let params  = `discover/${media}?&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&year=2020`;
+    
+    let data   = [];
+    let result = await axiosSrv.request( params );
+    let model  = new modelFilm();
+    result.forEach( ( item ) => {        
+        item.poster_path = CON_URL_IMG_URL_MIN + item.poster_path;
+        if( item.name ){
+            item.title = item.name;
+            delete item.name;
+        }
+        model.setdata( item )
+        data.push( model.toObjData() );
+    } );
+
     return data;
 };
 
