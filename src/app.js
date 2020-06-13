@@ -16,10 +16,8 @@ app.use(function(req, res, next) {
 });
 
 //CARREGAR ROTAS
-const routeIndex = require('./routes/index');
-const routeMedia = require('./routes/films');
-
-app.use( '/'     , routeIndex );
-app.use( '/media', routeMedia );
+app.use( '/'      , require('./routes/index') );
+app.use( '/media' , require('./routes/films') );
+app.use( '/genres', require('./routes/genre') );
 
 module.exports = app;

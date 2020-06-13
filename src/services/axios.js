@@ -14,7 +14,7 @@ class axiosService{
         const url = CON_API_BASE_URL + params + paramGet + 'language=' + CON_LANG + '&api_key=' + CON_API_KEY_AUTH_v3;
         console.log(url);
         await axios.get( url )
-        .then(function (response) {     
+        .then(function (response) {  
             if( typeof response.data.results !== 'undefined'){
                 data = response.data.results;
             } else {

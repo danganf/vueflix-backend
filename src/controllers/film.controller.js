@@ -1,7 +1,6 @@
 "use restrict";
 
 const repository = require('../repositories/film-repository');
-const { search } = require('../routes/films');
 
 exports.getDetail = async (req, res, next) => {
     try{
