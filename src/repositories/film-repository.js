@@ -6,6 +6,10 @@ const modelMovieDetail = require('../models/movie-detail');
 const modelTvDetail    = require('../models/tv-detail');
 const { CON_URL_IMG_URL, CON_URL_IMG_URL_MIN } = require('../configs/config-default');
 
+exports.paginator = (key) => {
+    return axiosSrv.getPaginator(key);
+};
+
 exports.getDetail = async (media, id) => {
 
     media      = media.toLowerCase();
@@ -58,8 +62,7 @@ exports.getList = async ( setup ) => {
         }
         model.setdata( item )
         data.push( model.toObjData() );
-    } );
-
+    } );    
     return data;
 };
 
