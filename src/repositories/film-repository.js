@@ -28,19 +28,30 @@ exports.getDetail = async (media, id) => {
 /**
  * @param {media, page} objSetup 
  */
-exports.getList = async ( objSetup ) => {
+exports.getList = async ( setup ) => {
 
-    const media = objSetup.media;
-    const page  = parseInt(objSetup.page);
+    const media   = setup.media;    
+    const page    = parseInt(setup.page);
+    let sort      = setup.sort;
+    let year      = setup.year;
+    let paramYear = 'year';
 
-    let params  = `discover/${media}?&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&year=${objSetup.year}`;
-        params += `&with_genres=${objSetup.genre}`;
+    if( media === 'tv' ){
+        paramYear = 'air_date.gte';
+        year     += '-01-01';
+    }
+
+    let params  = `discover/${media}?&sort_by=${sort}.${setup.dir}`;
+        params += `&include_adult=false&include_video=false&page=${page}&${paramYear}=${year}`;
+        params += `&with_genres=${setup.genre}`;
     
     let data   = [];
     let result = await axiosSrv.request( params );
     let model  = new modelFilm();
-    result.forEach( ( item ) => {        
-        item.poster_path = CON_URL_IMG_URL_MIN + item.poster_path;
+    result.forEach( ( item ) => {
+        if( item.poster_path ){
+            item.poster_path = CON_URL_IMG_URL_MIN + item.poster_path;
+        }
         if( item.name ){
             item.title = item.name;
             delete item.name;

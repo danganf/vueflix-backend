@@ -13,16 +13,21 @@ exports.getDetail = async (req, res, next) => {
 };
 
 exports.getList = async (req, res, next) => {
-    try{        
+    try{
+        const media  = req.params.media;
         const search = { 
-            media : req.params.media, 
+            media, 
             page  : req.params.page,
             year  : 2020,
+            sort  : media === 'tv' ? 'first_air_date' : 'popularity',
+            dir   : 'desc',
             genre : '',    
         };
 
-        if( typeof req.query.year !== 'undefined' ) {search.year  = parseInt( req.query.year );}
+        if( typeof req.query.year  !== 'undefined' ){search.year  = parseInt( req.query.year );}
         if( typeof req.query.genre !== 'undefined' ){search.genre = req.query.genre.trim();}
+        if( typeof req.query.sort  !== 'undefined' ){search.sort  = req.query.sort.trim();}
+        if( typeof req.query.dir   !== 'undefined' ){search.dir   = req.query.dir.trim();}
 
         let dataResult = await repository.getList(search);
         res.status(200).send( dataResult );
