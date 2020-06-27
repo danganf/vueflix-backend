@@ -1,11 +1,11 @@
 "use restrict";
 
-//import { getDetail } from '../repositories/film-repository';
+const repository = require('../../repositories/product-repository');
 
 exports.getHome = async (req, res, next) => {
     try{
-        //let dataResult = await getDetail( media, req.params.id );
-        res.status(200).send( {message: 'aaaaaa'} );
+        let dataResult = await repository.getHome();
+        res.status(200).send( dataResult );
     } catch(e){
         res.status(500).send({ message: "Nenhum registro localizado", data: e });
     }
