@@ -20,5 +20,6 @@ app.use(function(req, res, next) {
 app.use( '/'      , require('./routes/index') );
 app.use( '/media' , require('./routes/films') );
 app.use( '/genres', require('./routes/genre') );
+app.use( '/sales' , require('./routes/sales/products') );
 
 module.exports = app;
