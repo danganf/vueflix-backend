@@ -10,3 +10,12 @@ exports.getHome = async (req, res, next) => {
         res.status(500).send({ message: "Nenhum registro localizado", data: e });
     }
 }
+
+exports.putSold = async (req, res, next) => {
+    try{
+        await repository.putSold(req.params.id);
+        res.status(200).send( { message: 'OK' } );
+    } catch(e){
+        res.status(e.status).send({ message: 'Falha no processando', data: e });
+    }
+}
