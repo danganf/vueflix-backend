@@ -2,7 +2,7 @@
 
 var path = require('path');
 var sqlite = require('sqlite-sync');
-var exceptions = require('../util/Exceptions');
+var exceptions = require('../../util/Exceptions');
 
 const TABLE = 'products';
 const STATUS = [
@@ -11,7 +11,7 @@ const STATUS = [
     2//VENDIDO
 ]
 
-sqlite.connect( path.resolve('src/db/products.db') );
+sqlite.connect( path.resolve('src/public/db/products.db') );
 
 exports.getHome = async () => {
 

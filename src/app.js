@@ -1,8 +1,11 @@
 'use strict';
 
-const express    = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
-const app        = express();
+const path = require('path');
+const app = express();
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use( bodyParser.json( { limit: '5mb' } ) );
 app.use( bodyParser.urlencoded( { extended: false } ) );

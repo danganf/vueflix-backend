@@ -1,6 +1,6 @@
 "use restrict";
 
-const repository = require('../../repositories/product-repository');
+const repository = require('../../repositories/sales/product-repository');
 
 exports.getHome = async (req, res, next) => {
     try{

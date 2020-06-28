@@ -1,6 +1,7 @@
-const app    = require('../src/app');
+const app = require('../src/app');
 const debug  = require('debug')('nodestr:server');
-const http   = require('http');
+const http = require('http');
+
 const { handleError, normalizePort, onError } = require('../helpers/error');
 
 const port = normalizePort( process.env.PORT || 3000 );
